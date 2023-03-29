@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  height: 100dvh;
+}
+
+.inner {
+  display: grid;
+  grid-template: 1fr auto 1fr / 1fr;
+}
+
+.textsWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.heading1 {
+  font-size: 4rem;
+}
+
+.imageWrapper {
+  align-items: flex-end;
+  display: flex;
+  justify-content: center;
+}
