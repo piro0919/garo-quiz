@@ -111,7 +111,10 @@ export default function Page(): JSX.Element {
     ],
     []
   );
-  const { choices, title } = useMemo(() => quizList[count], [count, quizList]);
+  const { choices, title } = useMemo(
+    () => quizList.at(count) || quizList[0],
+    [count, quizList]
+  );
   const [answers, setAnswers] = useState<string[]>([]);
   const router = useRouter();
 
