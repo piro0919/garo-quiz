@@ -1,11 +1,13 @@
 "use client";
 import NoSSR from "@mpth/react-no-ssr";
+import usePrevious from "@react-hook/previous";
 import arrayShuffle from "array-shuffle";
 // eslint-disable-next-line camelcase
 import { New_Tegomin } from "next/font/google";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import rn from "random-number";
+import { useEffect, useMemo, useState } from "react";
 import { BiLinkExternal } from "react-icons/bi";
 import Spacer from "react-spacer";
 import styles from "./style.module.scss";
@@ -111,12 +113,25 @@ export default function Page(): JSX.Element {
     ],
     []
   );
-  const { choices, title } = useMemo(
-    () => quizList.at(count) || quizList[0],
-    [count, quizList]
-  );
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+  const prevCount = usePrevious(count, 0);
+  const [quiz, setQuiz] = useState(quizList[0]);
+  const { choices, title } = useMemo(() => quiz, [quiz]);
   const [answers, setAnswers] = useState<string[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    if (count === prevCount) {
+      return;
+    }
+
+    const { choices, ...quiz } = quizList[count];
+
+    setQuiz({
+      ...quiz,
+      choices: arrayShuffle(choices),
+    });
+  }, [count, prevCount, quizList]);
 
   return (
     <NoSSR>
@@ -131,12 +146,14 @@ export default function Page(): JSX.Element {
           <div className={styles.textsWrapper}>
             <h2 className={styles.heading2}>{title}</h2>
             <ul className={styles.list}>
-              {arrayShuffle(choices).map((choice) => (
+              {choices.map((choice) => (
                 <li className={styles.item} key={choice}>
                   <div
                     className={styles.choiceBlock}
                     onClick={(): void => {
-                      setAnswers((prevAnswers) => [...prevAnswers, choice]);
+                      const latestAnswers = [...answers, choice];
+
+                      setAnswers(latestAnswers);
 
                       if (quizList.length >= count + 2) {
                         router.push(`/quiz/${count + 2}`);
@@ -144,11 +161,19 @@ export default function Page(): JSX.Element {
                         return;
                       }
 
-                      const correctAnswersCount = answers.filter(
+                      const correctAnswersCount = latestAnswers.filter(
                         (answer, index) => answer === quizList[index].answer
                       ).length;
 
-                      router.push(`/result/${correctAnswersCount}0`);
+                      console.log(correctAnswersCount);
+
+                      const point = rn({
+                        integer: true,
+                        max: Math.min(correctAnswersCount * 10 + 9, 100),
+                        min: correctAnswersCount * 10,
+                      });
+
+                      router.push(`/result/${point}`);
                     }}
                   >
                     {choice}
