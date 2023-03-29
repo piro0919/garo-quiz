@@ -133,6 +133,20 @@ export default function Page(): JSX.Element {
     });
   }, [count, prevCount, quizList]);
 
+  useEffect(() => {
+    history.pushState(null, "", location.href);
+
+    const popstate = (): void => {
+      history.go(1);
+    };
+
+    window.addEventListener("popstate", popstate);
+
+    return () => {
+      window.removeEventListener("popstate", popstate);
+    };
+  }, []);
+
   return (
     <NoSSR>
       <div className={styles.wrapper}>
@@ -164,12 +178,12 @@ export default function Page(): JSX.Element {
                       const correctAnswersCount = latestAnswers.filter(
                         (answer, index) => answer === quizList[index].answer
                       ).length;
-
-                      console.log(correctAnswersCount);
-
                       const point = rn({
                         integer: true,
-                        max: Math.min(correctAnswersCount * 10 + 9, 100),
+                        max:
+                          correctAnswersCount === quizList.length
+                            ? 100
+                            : correctAnswersCount * 10 + 9,
                         min: correctAnswersCount * 10,
                       });
 
