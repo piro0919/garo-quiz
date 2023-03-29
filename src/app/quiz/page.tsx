@@ -10,6 +10,7 @@ import rn from "random-number";
 import { useEffect, useMemo, useState } from "react";
 import { BiLinkExternal } from "react-icons/bi";
 import Spacer from "react-spacer";
+import { useLocalStorage } from "usehooks-ts";
 import styles from "./style.module.scss";
 
 const newTegomin = New_Tegomin({ subsets: ["latin"], weight: "400" });
@@ -117,7 +118,7 @@ export default function Page(): JSX.Element {
   const prevCount = usePrevious(count, 0);
   const [quiz, setQuiz] = useState(quizList[0]);
   const { choices, title } = useMemo(() => quiz, [quiz]);
-  const [answers, setAnswers] = useState<string[]>([]);
+  const [answers, setAnswers] = useLocalStorage<string[]>("answers", []);
   const router = useRouter();
 
   useEffect(() => {
@@ -186,6 +187,8 @@ export default function Page(): JSX.Element {
                             : correctAnswersCount * 10 + 9,
                         min: correctAnswersCount * 10,
                       });
+
+                      setAnswers([]);
 
                       router.push(`/result/${point}`);
                     }}
