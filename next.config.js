@@ -11,18 +11,6 @@ const nextConfig = {
     unoptimized: true,
   },
   reactStrictMode: false,
-  async rewrites() {
-    return [
-      {
-        source: "/quiz/:quizNumber*",
-        destination: "/quiz",
-      },
-      {
-        source: "/result/:point*",
-        destination: "/result",
-      },
-    ];
-  },
   sassOptions: {
     additionalData: async (content, { resourcePath }) => {
       if (resourcePath.includes("node_modules")) {

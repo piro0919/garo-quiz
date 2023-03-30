@@ -2,8 +2,6 @@
   "dependencies": {
     "@commitlint/cli": "17.5.1",
     "@commitlint/config-conventional": "17.4.4",
-    "@mpth/react-no-ssr": "1.0.1",
-    "@react-hook/previous": "1.0.1",
     "@types/node": "18.15.11",
     "@types/random-number": "0.0.1",
     "@types/react": "18.0.31",

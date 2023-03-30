@@ -3,7 +3,6 @@
 import { New_Tegomin, Yusei_Magic } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { TwitterShareButton } from "react-share";
 import Spacer from "react-spacer";
@@ -12,12 +11,12 @@ import styles from "./style.module.scss";
 const newTegomin = New_Tegomin({ subsets: ["latin"], weight: "400" });
 const yuseiMagic = Yusei_Magic({ subsets: ["latin"], weight: "400" });
 
-export default function Page(): JSX.Element {
-  const pathname = usePathname();
-  const point = useMemo(
-    () => parseInt(pathname.split("/").at(-1) as string, 10),
-    [pathname]
-  );
+export default function Page({
+  params: { point: paramsPoint },
+}: {
+  params: { point: string };
+}): JSX.Element {
+  const point = useMemo(() => parseInt(paramsPoint, 10), [paramsPoint]);
   const [url, setUrl] = useState("");
 
   useEffect(() => {
