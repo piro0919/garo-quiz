@@ -3,6 +3,7 @@
 import { New_Tegomin, Yusei_Magic } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { TwitterShareButton } from "react-share";
 import Spacer from "react-spacer";
@@ -20,10 +21,11 @@ export default function Page({
   const point = useMemo(() => parseInt(paramsPoint, 10), [paramsPoint]);
   const [url, setUrl] = useState("");
   const { height } = useWindowSize();
+  const pathname = usePathname();
 
   useEffect(() => {
-    setUrl(window.location.href);
-  }, []);
+    setUrl(`${window.location.origin}${pathname}`);
+  }, [pathname]);
 
   return (
     <div className={styles.wrapper} style={{ height }}>
