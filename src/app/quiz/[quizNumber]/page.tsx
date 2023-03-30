@@ -8,7 +8,7 @@ import rn from "random-number";
 import { useEffect, useMemo, useState } from "react";
 import { BiLinkExternal } from "react-icons/bi";
 import Spacer from "react-spacer";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import styles from "./style.module.scss";
 import useQuizList from "./useQuizList";
 
@@ -30,6 +30,7 @@ export default function Page({
     quizList.map(() => "")
   );
   const router = useRouter();
+  const { height } = useWindowSize();
 
   useEffect(() => {
     const { choices, ...quiz } = quizList[quizNumber];
@@ -41,7 +42,7 @@ export default function Page({
   }, [quizList, quizNumber]);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={{ height }}>
       <Spacer grow="1" />
       <div className={styles.inner}>
         <div className={styles.heading1Wrapper}>

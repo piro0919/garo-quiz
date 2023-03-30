@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { TwitterShareButton } from "react-share";
 import Spacer from "react-spacer";
+import { useWindowSize } from "usehooks-ts";
 import styles from "./style.module.scss";
 
 const newTegomin = New_Tegomin({ subsets: ["latin"], weight: "400" });
@@ -18,13 +19,14 @@ export default function Page({
 }): JSX.Element {
   const point = useMemo(() => parseInt(paramsPoint, 10), [paramsPoint]);
   const [url, setUrl] = useState("");
+  const { height } = useWindowSize();
 
   useEffect(() => {
     setUrl(window.location.href);
   }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={{ height }}>
       <Spacer grow="1" />
       <div className={styles.inner}>
         <div className={styles.heading1Wrapper}>

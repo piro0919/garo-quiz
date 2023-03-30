@@ -1,15 +1,19 @@
+"use client";
 // eslint-disable-next-line camelcase
 import { New_Tegomin } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import Spacer from "react-spacer";
+import { useWindowSize } from "usehooks-ts";
 import styles from "./style.module.scss";
 
 const newTegomin = New_Tegomin({ subsets: ["latin"], weight: "400" });
 
 export default function Page(): JSX.Element {
+  const { height } = useWindowSize();
+
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={{ height }}>
       <Spacer grow="1" />
       <div className={styles.inner}>
         <Spacer />
