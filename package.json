@@ -53,13 +53,13 @@
   "name": "garo-quiz",
   "overrides": {
     "stylelint-css-modules-no-global-scoped-selector": {
-      "stylelint": "15.3.0"
+      "stylelint": "15.10.1"
     },
     "stylelint-csstree-validator": {
-      "stylelint": "15.3.0"
+      "stylelint": "15.10.1"
     },
     "stylelint-sass-render-errors": {
-      "stylelint": "15.3.0"
+      "stylelint": "15.10.1"
     }
   },
   "private": true,
